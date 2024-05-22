@@ -18,13 +18,13 @@ public class UserDto implements IUserDto {
     private String userName;
     private String userEmail;
     private String password;
-    private Set<Long> activity;
+    private Set<ActivityDto> activity;
 
     public UserDto(IUserEntity userEntity) {
         this.idUser = userEntity.getIdUser();
         this.userName = userEntity.getUserName();
         this.userEmail = userEntity.getUserEmail();
         this.activity = userEntity.getActivity().stream().map(
-                ActivityEntity::getIdActivity).collect(Collectors.toSet());
+                ActivityDto::new).collect(Collectors.toSet());
     }
 }

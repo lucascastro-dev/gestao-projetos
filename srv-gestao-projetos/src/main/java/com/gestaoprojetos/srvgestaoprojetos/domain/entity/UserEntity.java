@@ -46,6 +46,6 @@ public class UserEntity implements IUserEntity {
         this.userEmail = userForm.getUserEmail();
         this.password = userForm.getPassword();
         this.activity = userForm.getActivity().stream().map(
-                idUser -> ActivityEntity.builder().idActivity(idUser).build()).collect(Collectors.toSet());
+                idActivity -> ActivityEntity.builder().idActivity(idActivity).build()).collect(Collectors.toSet());
     }
 }

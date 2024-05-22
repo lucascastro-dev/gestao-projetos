@@ -1,6 +1,7 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.entity;
 
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectEntity;
+import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +18,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -41,4 +43,15 @@ public class ProjectEntity implements IProjectEntity {
     @OneToMany(mappedBy = "projects", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ActivityEntity> activity;
 
+    public ProjectEntity(IProjectForm projectForm) {
+        this.idProject = projectForm.getIdProject();
+        this.name = projectForm.getName();
+        this.description = projectForm.getDescription();
+        this.startDate = projectForm.getStartDate();
+        this.endDate = projectForm.getEndDate();
+        this.status = projectForm.getStatus();
+        this.client = ClientEntity.builder().idClient(projectForm.getIdClient()).build();
+        this.activity = projectForm.getIdsActivity().stream().map(
+                idActivity -> ActivityEntity.builder().idActivity(idActivity).build()).collect(Collectors.toList());
+    }
 }

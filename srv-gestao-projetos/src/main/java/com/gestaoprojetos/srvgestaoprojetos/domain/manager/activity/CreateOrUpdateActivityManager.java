@@ -3,7 +3,7 @@ package com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityManager;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity.task.TaskSaveActivity;
-import com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity.validation.ValidateDate;
+import com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity.validation.ValidateDateActivity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity.validation.ValidateIdActivity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity.validation.ValidateProject;
 import com.gestaoprojetos.srvgestaoprojetos.infra.handler.AbstractHandler;
@@ -21,9 +21,8 @@ public class CreateOrUpdateActivityManager extends AbstractHandler<IActivityForm
         setTasks(
                 List.of(
                         ValidateIdActivity.class,
-                        //TODO: AJUSTAR REGRAS APÓS CRIAR SERVIÇOS DE PROJETO
                         ValidateProject.class,
-                        ValidateDate.class,
+                        ValidateDateActivity.class,
                         TaskSaveActivity.class
                 )
         );

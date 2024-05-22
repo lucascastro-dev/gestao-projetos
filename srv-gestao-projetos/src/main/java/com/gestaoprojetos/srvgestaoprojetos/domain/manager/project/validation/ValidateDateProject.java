@@ -1,9 +1,9 @@
-package com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity.validation;
+package com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.validation;
 
-import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
-import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityService;
+import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
+import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.activity.ActivityService;
+import com.gestaoprojetos.srvgestaoprojetos.domain.service.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +13,16 @@ import static com.gestaoprojetos.srvgestaoprojetos.domain.util.Util.validateFrom
 import static com.gestaoprojetos.srvgestaoprojetos.domain.util.Util.validateFromStartValidityDate;
 
 @Service
-public class ValidateDate implements ITask<IActivityForm> {
-    private final IActivityService<IActivityForm> activityService;
+public class ValidateDateProject implements ITask<IProjectForm> {
+    private final IProjectService<IProjectForm> projectService;
 
     @Autowired
-    public ValidateDate(ActivityService activityService) {
-        this.activityService = activityService;
+    public ValidateDateProject(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
     @Override
-    public void runTask(IActivityForm param) {
+    public void runTask(IProjectForm param) {
         validateDate(param.getStartDate(), param.getEndDate());
     }
 
