@@ -1,19 +1,18 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client;
 
-import com.gestaoprojetos.srvgestaoprojetos.domain.entity.ProjectEntity;
-
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
 
 public interface IClient {
     Long getIdClient();
 
+    @NotNull(message = "Obrigatório informar nome do cliente")
     String getName();
 
+    @NotNull(message = "Obrigatório informar email do cliente")
     String getEmail();
 
+    @NotNull(message = "Obrigatório informar telefone do cliente")
     String getPhone();
-
-    List<ProjectEntity> getProjects();
 
     void setIdClient(Long idClient);
 
@@ -22,6 +21,4 @@ public interface IClient {
     void setEmail(String email);
 
     void setPhone(String phone);
-
-    void setProjects(List<ProjectEntity> projects);
 }

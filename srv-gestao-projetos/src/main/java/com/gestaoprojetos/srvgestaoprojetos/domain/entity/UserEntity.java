@@ -3,6 +3,8 @@ package com.gestaoprojetos.srvgestaoprojetos.domain.entity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.user.IUserEntity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.user.IUserForm;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -27,6 +29,7 @@ public class UserEntity implements IUserEntity {
 
     @Id
     @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
     private String userName;
     private String userEmail;

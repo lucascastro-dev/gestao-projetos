@@ -23,11 +23,17 @@ public class ValidateActivity implements ITask<IUserForm> {
     public void runTask(IUserForm param) {
         if (!Util.isNullOrEmpty(param.getActivity())) {
 
-            ObjectNotFoundException.isCondition(Util.isNullOrEmpty(
-                            param.getActivity().stream().map(
-                                    id -> activityService.findActivityById(id)
-                            )),
-                    String.format(Constants.ACTIVITY_NOT_FOUND, param.getIdUser()));
+            boolean allActivitiesExist = param.getActivity().stream()
+                    .allMatch(id -> {
+                        try {
+                            activityService.findActivityById(id);
+                            return true;
+                        } catch (ObjectNotFoundException e) {
+                            return false;
+                        }
+                    });
+
+            ObjectNotFoundException.isCondition(allActivitiesExist, String.format(Constants.ACTIVITY_NOT_FOUND, param.getIdUser()));
         }
     }
 }

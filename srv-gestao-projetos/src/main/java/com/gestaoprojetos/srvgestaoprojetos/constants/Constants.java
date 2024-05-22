@@ -9,4 +9,6 @@ public class Constants {
     public static final String PROJECT_NOT_FOUND = "Projeto não encontrado";
     public static final String DUPLICATE_PROJECT = "Projeto já cadastrado";
     public static final String PROJECT_IS_ATIVE = "Não é possível deletar projeto quando ativo";
+    public static final String CLIENT_NOT_FOUND = "Cliente não encontrado";
+    public static final String DUPLICATE_CLIENT = "Cliente já cadastrado";
 }

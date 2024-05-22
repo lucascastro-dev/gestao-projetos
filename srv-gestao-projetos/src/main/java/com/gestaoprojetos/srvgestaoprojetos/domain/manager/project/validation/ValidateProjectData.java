@@ -1,6 +1,7 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.validation;
 
 import com.gestaoprojetos.srvgestaoprojetos.constants.Constants;
+import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectEntity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
@@ -22,8 +23,11 @@ public class ValidateProjectData implements ITask<IProjectForm> {
     @Override
     public void runTask(IProjectForm param) {
         if (Util.isNullOrEmpty(param.getIdProject())) {
+            IProjectEntity projectEntity = projectService.findByNameProject(param.getName());
+
             DuplicateDataBaseException.isCondition(
-                    Util.isNullOrEmpty(projectService.findByNameProject(param.getName())), Constants.DUPLICATE_PROJECT);
+                    projectEntity != null && projectEntity.equals(param.getName()),
+                    Constants.DUPLICATE_PROJECT);
         }
     }
 }

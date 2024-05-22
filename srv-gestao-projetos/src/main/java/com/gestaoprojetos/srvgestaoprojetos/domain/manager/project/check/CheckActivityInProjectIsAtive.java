@@ -23,8 +23,8 @@ public class CheckActivityInProjectIsAtive implements ITask<IProjectForm> {
 
     @Override
     public void runTask(IProjectForm param) {
-        InvalidDataException.isCondition(Util.isNullOrEmpty(param.getIdsActivity().stream().map(
+        InvalidDataException.isCondition(!Util.isNullOrEmpty(param.getIdsActivity().stream().map(
                 idActivity -> activityService.findActivityById(idActivity))
-        ), Constants.ACTIVITY_IS_ATIVE);
+        ), Constants.PROJECT_IS_ATIVE);
     }
 }

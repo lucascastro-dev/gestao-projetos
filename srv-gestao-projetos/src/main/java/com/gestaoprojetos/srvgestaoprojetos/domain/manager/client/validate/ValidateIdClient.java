@@ -1,9 +1,8 @@
-package com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.validation;
+package com.gestaoprojetos.srvgestaoprojetos.domain.manager.client.validate;
 
 import com.gestaoprojetos.srvgestaoprojetos.constants.Constants;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientService;
-import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
 import com.gestaoprojetos.srvgestaoprojetos.domain.service.client.ClientService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.util.Util;
@@ -12,20 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ValidateClientInProject implements ITask<IProjectForm> {
+public class ValidateIdClient implements ITask<IClientForm> {
 
     private final IClientService<IClientForm> clientService;
 
     @Autowired
-    public ValidateClientInProject(ClientService clientService) {
+    public ValidateIdClient(ClientService clientService) {
         this.clientService = clientService;
     }
 
     @Override
-    public void runTask(IProjectForm param) {
-        ObjectNotFoundException.isCondition(Util.isNullOrEmpty(
-                        clientService.findClientById(param.getIdClient())),
-                String.format(Constants.CLIENT_NOT_FOUND, param.getIdsActivity()));
+    public void runTask(IClientForm param) {
+        if (!Util.isNullOrEmpty(param.getIdClient())) {
+            ObjectNotFoundException.isCondition(Util.isNullOrEmpty(clientService.findClientById(param.getIdClient())),
+                    String.format(Constants.CLIENT_NOT_FOUND, param.getIdClient()));
+        }
     }
 }
-

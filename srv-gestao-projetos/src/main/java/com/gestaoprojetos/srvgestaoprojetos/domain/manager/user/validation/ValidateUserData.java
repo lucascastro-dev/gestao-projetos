@@ -22,10 +22,11 @@ public class ValidateUserData implements ITask<IUserForm> {
     @Override
     public void runTask(IUserForm param) {
         if (Util.isNullOrEmpty(param.getIdUser())) {
-            DuplicateDataBaseException.isCondition(
-                    Util.isNullOrEmpty(userService.findByUserName(param.getUserName())), Constants.DUPLICATE_USER);
-            DuplicateDataBaseException.isCondition(
-                    Util.isNullOrEmpty(userService.findByUserEmail(param.getUserEmail())), Constants.DUPLICATE_USER);
+            Boolean findByName = userService.findByUserName(param.getUserName()) != null && userService.findByUserName(param.getUserName()).getUserName().equals(param.getUserName());
+            Boolean findByEmail = userService.findByUserEmail(param.getUserEmail()) != null && userService.findByUserEmail(param.getUserEmail()).getUserName().equals(param.getUserEmail());
+
+            DuplicateDataBaseException.isCondition(findByName, Constants.DUPLICATE_USER);
+            DuplicateDataBaseException.isCondition(findByEmail, Constants.DUPLICATE_USER);
         }
     }
 }
