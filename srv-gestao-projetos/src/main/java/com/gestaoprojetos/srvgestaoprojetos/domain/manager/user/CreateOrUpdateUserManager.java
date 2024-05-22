@@ -22,7 +22,6 @@ public class CreateOrUpdateUserManager extends AbstractHandler<IUserForm>
                 List.of(
                         ValidateIdUser.class,
                         ValidateUserData.class,
-                        //TODO: AJUSTAR APÓS CRIAR OS SERVIÇOS DE ATIVIDADES
                         ValidateActivity.class,
                         TaskSaveUser.class
                 )

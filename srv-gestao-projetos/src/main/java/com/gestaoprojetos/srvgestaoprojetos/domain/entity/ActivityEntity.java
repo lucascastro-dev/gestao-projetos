@@ -1,6 +1,7 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.entity;
 
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityEntity;
+import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -34,4 +35,14 @@ public class ActivityEntity implements IActivityEntity {
     @ManyToOne
     @JoinColumn(name = "idProject")
     private ProjectEntity projects;
+
+    public ActivityEntity(IActivityForm activityForm) {
+        this.idActivity = activityForm.getIdActivity();
+        this.name = activityForm.getName();
+        this.description = activityForm.getDescription();
+        this.startDate = activityForm.getStartDate();
+        this.endDate = activityForm.getEndDate();
+        this.status = activityForm.getStatus();
+        this.projects = ProjectEntity.builder().idProject(activityForm.getIdActivity()).build();
+    }
 }

@@ -1,5 +1,7 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.util;
 
+import com.gestaoprojetos.srvgestaoprojetos.infra.exception.InvalidDataException;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +67,18 @@ public final class Util {
 
     public static boolean notNullOrEmpty(Long value) {
         return Boolean.FALSE.equals(isNullOrEmpty(value));
+    }
+
+    public static void validateFromStartValidityDate(LocalDate startValidate) {
+        InvalidDataException.isCondition(startValidate.isBefore(LocalDate.now()),
+                "Data informada não pode ser anterior a data atual");
+    }
+
+    public static void validateFromEndValidityDate(LocalDate startValidate, LocalDate endValidate) {
+        InvalidDataException.isCondition(endValidate.isBefore(LocalDate.now()),
+                "Data informada não pode ser anterior a data atual");
+        InvalidDataException.isCondition(endValidate.isBefore(startValidate),
+                "Data fim não pode ser anterior a data início");
     }
 
 }

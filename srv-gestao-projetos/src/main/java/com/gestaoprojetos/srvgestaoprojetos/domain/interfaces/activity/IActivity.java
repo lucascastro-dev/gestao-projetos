@@ -1,23 +1,24 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity;
 
-import com.gestaoprojetos.srvgestaoprojetos.domain.entity.ProjectEntity;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 public interface IActivity {
     Long getIdActivity();
 
+    @NotNull(message = "Nome de atividade é obrigatória")
     String getName();
 
     String getDescription();
 
+    @NotNull(message = "Data inicio da atividade é obrigatória")
     LocalDate getStartDate();
 
+    @NotNull(message = "Data fim da atividade é obrigatória")
     LocalDate getEndDate();
 
     Boolean getStatus();
-
-    ProjectEntity getProjects();
 
     void setIdActivity(Long idActivity);
 
@@ -30,6 +31,4 @@ public interface IActivity {
     void setEndDate(LocalDate endDate);
 
     void setStatus(Boolean status);
-
-    void setProjects(ProjectEntity projects);
 }

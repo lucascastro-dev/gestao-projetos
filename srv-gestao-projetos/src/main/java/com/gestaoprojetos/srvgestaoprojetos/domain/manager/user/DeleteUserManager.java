@@ -20,7 +20,6 @@ public class DeleteUserManager extends AbstractHandler<IUserForm>
         setTasks(
                 List.of(
                         ValidateIdUser.class,
-                        //TODO: AJUSTAR APÓS CRIAR OS SERVIÇOS DE ATIVIDADES
                         CheckActiveUserActivities.class,
                         TaskDeleteUser.class
                 )
