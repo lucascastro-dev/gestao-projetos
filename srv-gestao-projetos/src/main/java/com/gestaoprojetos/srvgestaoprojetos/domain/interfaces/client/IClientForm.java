@@ -1,9 +1,9 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client;
 
-import java.util.List;
+import java.util.Set;
 
 public interface IClientForm extends IClient {
-    List<Long> getProjects();
+    Set<Long> getProjects();
 
-    void setProjects(List<Long> projects);
+    void setProjects(Set<Long> projects);
 }

@@ -2,7 +2,6 @@ package com.gestaoprojetos.srvgestaoprojetos.domain.manager.project;
 
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectManager;
-import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.check.CheckActivityInProjectIsAtive;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.check.CheckProjectIsAtive;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.task.TaskDeleteProject;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.validation.ValidateIdProject;
@@ -22,7 +21,6 @@ public class DeleteProjectManager extends AbstractHandler<IProjectForm>
                 List.of(
                         ValidateIdProject.class,
                         CheckProjectIsAtive.class,
-                        CheckActivityInProjectIsAtive.class,
                         TaskDeleteProject.class
                 )
         );

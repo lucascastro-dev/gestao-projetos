@@ -23,5 +23,4 @@ public class ProjectForm implements IProjectForm {
     private LocalDate endDate;
     private Boolean status;
     private Long idClient;
-    private List<Long> idsActivity;
 }

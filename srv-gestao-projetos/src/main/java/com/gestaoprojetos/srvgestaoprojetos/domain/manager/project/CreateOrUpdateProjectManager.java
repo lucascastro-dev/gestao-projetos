@@ -3,7 +3,6 @@ package com.gestaoprojetos.srvgestaoprojetos.domain.manager.project;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectManager;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.task.TaskSaveProject;
-import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.validation.ValidateActivityInProject;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.validation.ValidateClientInProject;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.validation.ValidateDateProject;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.project.validation.ValidateIdProject;
@@ -26,7 +25,6 @@ public class CreateOrUpdateProjectManager extends AbstractHandler<IProjectForm>
                         ValidateProjectData.class,
                         ValidateDateProject.class,
                         ValidateClientInProject.class,
-                        ValidateActivityInProject.class,
                         TaskSaveProject.class
                 )
         );

@@ -1,11 +1,10 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project;
 
-import com.gestaoprojetos.srvgestaoprojetos.domain.dto.ActivityDto;
-
-import java.util.List;
+import com.gestaoprojetos.srvgestaoprojetos.domain.dto.ClientDto;
 
 public interface IProjectDto extends IProject {
-    public List<ActivityDto> getActivity();
+    ClientDto getClient();
 
-    public void setActivity(List<ActivityDto> activity);
+    void setClient(ClientDto client);
+
 }

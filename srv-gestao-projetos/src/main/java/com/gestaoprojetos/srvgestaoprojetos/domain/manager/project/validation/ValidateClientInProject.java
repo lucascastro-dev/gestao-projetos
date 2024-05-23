@@ -25,7 +25,7 @@ public class ValidateClientInProject implements ITask<IProjectForm> {
     public void runTask(IProjectForm param) {
         ObjectNotFoundException.isCondition(Util.isNullOrEmpty(
                         clientService.findClientById(param.getIdClient())),
-                String.format(Constants.CLIENT_NOT_FOUND, param.getIdsActivity()));
+                String.format(Constants.CLIENT_NOT_FOUND, param.getIdClient()));
     }
 }
 

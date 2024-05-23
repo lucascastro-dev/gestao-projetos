@@ -1,7 +1,6 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.gestaoprojetos.srvgestaoprojetos.domain.entity.ClientEntity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectDto;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectEntity;
 import lombok.Getter;
@@ -24,8 +23,7 @@ public class ProjectDto implements IProjectDto {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate endDate;
     private Boolean status;
-    private ClientEntity client;
-    private List<ActivityDto> activity;
+    private ClientDto client;
 
     public ProjectDto(IProjectEntity projectEntity) {
         this.idProject = projectEntity.getIdProject();
@@ -34,8 +32,6 @@ public class ProjectDto implements IProjectDto {
         this.startDate = projectEntity.getStartDate();
         this.endDate = projectEntity.getEndDate();
         this.status = projectEntity.getStatus();
-        this.client = projectEntity.getClient();
-        this.activity = projectEntity.getActivity().stream().map(
-                ActivityDto::new).collect(Collectors.toList());
+        this.client = new ClientDto(projectEntity.getClient());
     }
 }

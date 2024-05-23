@@ -1,5 +1,6 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityEntity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
 import jakarta.persistence.Entity;
@@ -34,9 +35,9 @@ public class ActivityEntity implements IActivityEntity {
     private LocalDate startDate;
     private LocalDate endDate;
     private Boolean status;
-
     @ManyToOne
     @JoinColumn(name = "idProject")
+    @JsonIgnore
     private ProjectEntity projects;
 
     public ActivityEntity(IActivityForm activityForm) {
@@ -46,6 +47,6 @@ public class ActivityEntity implements IActivityEntity {
         this.startDate = activityForm.getStartDate();
         this.endDate = activityForm.getEndDate();
         this.status = activityForm.getStatus();
-        this.projects = ProjectEntity.builder().idProject(activityForm.getIdActivity()).build();
+        this.projects = ProjectEntity.builder().idProject(activityForm.getIdProjects()).build();
     }
 }

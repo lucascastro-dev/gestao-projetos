@@ -1,5 +1,6 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectEntity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import jakarta.persistence.CascadeType;
@@ -19,7 +20,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -29,7 +31,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectEntity implements IProjectEntity {
-
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +40,10 @@ public class ProjectEntity implements IProjectEntity {
     private LocalDate startDate;
     private LocalDate endDate;
     private Boolean status;
-
     @ManyToOne
     @JoinColumn(name = "idClient")
+    @JsonIgnore
     private ClientEntity client;
-    @OneToMany(mappedBy = "projects", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ActivityEntity> activity;
 
     public ProjectEntity(IProjectForm projectForm) {
         this.idProject = projectForm.getIdProject();
@@ -54,7 +53,5 @@ public class ProjectEntity implements IProjectEntity {
         this.endDate = projectForm.getEndDate();
         this.status = projectForm.getStatus();
         this.client = ClientEntity.builder().idClient(projectForm.getIdClient()).build();
-        this.activity = projectForm.getIdsActivity().stream().map(
-                idActivity -> ActivityEntity.builder().idActivity(idActivity).build()).collect(Collectors.toList());
     }
 }

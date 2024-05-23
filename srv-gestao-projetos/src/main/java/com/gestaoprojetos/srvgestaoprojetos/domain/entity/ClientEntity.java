@@ -16,7 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -33,9 +34,8 @@ public class ClientEntity implements IClientEntity {
     private String name;
     private String email;
     private String phone;
-
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProjectEntity> projects;
+    private Set<ProjectEntity> projects = new HashSet<>();
 
     public ClientEntity(IClientForm clientForm) {
         this.idClient = clientForm.getIdClient();
@@ -43,6 +43,6 @@ public class ClientEntity implements IClientEntity {
         this.email = clientForm.getEmail();
         this.phone = clientForm.getPhone();
         this.projects = clientForm.getProjects().stream().map(
-                project -> ProjectEntity.builder().idProject(project).build()).collect(Collectors.toList());
+                project -> ProjectEntity.builder().idProject(project).build()).collect(Collectors.toSet());
     }
 }

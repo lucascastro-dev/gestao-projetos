@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,5 +20,5 @@ public class ClientForm implements IClientForm {
     private String name;
     private String email;
     private String phone;
-    private List<Long> projects;
+    private Set<Long> projects;
 }

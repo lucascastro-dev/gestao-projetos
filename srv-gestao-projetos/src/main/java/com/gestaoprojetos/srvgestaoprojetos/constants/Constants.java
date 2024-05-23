@@ -11,4 +11,5 @@ public class Constants {
     public static final String PROJECT_IS_ATIVE = "Não é possível deletar projeto quando ativo";
     public static final String CLIENT_NOT_FOUND = "Cliente não encontrado";
     public static final String DUPLICATE_CLIENT = "Cliente já cadastrado";
+    public static final String CLIENT_PROJECT_IS_BROCKER = "Não é possível deletar cliente com projeto vinculado";
 }

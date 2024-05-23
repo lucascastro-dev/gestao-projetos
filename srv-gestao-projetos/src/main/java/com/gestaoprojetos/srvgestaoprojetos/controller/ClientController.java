@@ -74,7 +74,7 @@ public class ClientController {
     @GetMapping(value = "/{idCliente}")
     @Operation(summary = "Buscar um cliente pelo ID")
     @ResponseStatus(HttpStatus.OK)
-    public IClientDto findById(@PathVariable Long idClient) {
-        return find.get(ClientForm.builder().idClient(idClient).build());
+    public IClientDto findById(@PathVariable Long idCliente) {
+        return find.get(ClientForm.builder().idClient(idCliente).build());
     }
 }
