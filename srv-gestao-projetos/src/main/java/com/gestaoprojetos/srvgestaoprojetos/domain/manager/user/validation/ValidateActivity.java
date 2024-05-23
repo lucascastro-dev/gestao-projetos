@@ -23,7 +23,7 @@ public class ValidateActivity implements ITask<IUserForm> {
     public void runTask(IUserForm param) {
         if (!Util.isNullOrEmpty(param.getActivity())) {
 
-            boolean allActivitiesExist = param.getActivity().stream()
+            Boolean allActivitiesExist = param.getActivity().stream()
                     .allMatch(id -> {
                         try {
                             activityService.findActivityById(id);
@@ -33,7 +33,7 @@ public class ValidateActivity implements ITask<IUserForm> {
                         }
                     });
 
-            ObjectNotFoundException.isCondition(allActivitiesExist, String.format(Constants.ACTIVITY_NOT_FOUND, param.getIdUser()));
+            ObjectNotFoundException.isCondition(!allActivitiesExist, String.format(Constants.ACTIVITY_NOT_FOUND, param.getIdUser()));
         }
     }
 }
