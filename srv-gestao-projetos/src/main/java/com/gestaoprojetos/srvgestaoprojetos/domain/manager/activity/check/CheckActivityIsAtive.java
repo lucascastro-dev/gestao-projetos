@@ -5,8 +5,8 @@ import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivity
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.activity.ActivityService;
 import com.gestaoprojetos.srvgestaoprojetos.infra.exception.InvalidDataException;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.activity.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,6 @@ public class CheckActivityIsAtive implements ITask<IActivityForm> {
     public void runTask(IActivityForm param) {
         IActivityEntity activityEntity = activityService.findActivityById(param.getIdActivity());
 
-        InvalidDataException.isCondition(!activityEntity.getStatus(), Constants.ACTIVITY_IS_ATIVE);
+        InvalidDataException.isCondition(activityEntity.getStatus(), Constants.ACTIVITY_IS_ATIVE);
     }
 }

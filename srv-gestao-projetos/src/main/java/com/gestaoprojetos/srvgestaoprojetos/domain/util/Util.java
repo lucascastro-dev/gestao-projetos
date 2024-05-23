@@ -49,26 +49,6 @@ public final class Util {
         return Objects.isNull(date);
     }
 
-    public static boolean notNullOrEmpty(Object obj) {
-        return Boolean.FALSE.equals(isNullOrEmpty(obj));
-    }
-
-    public static boolean notNullOrEmpty(String obj) {
-        return Boolean.FALSE.equals(isNullOrEmpty(obj));
-    }
-
-    public static boolean notNullOrEmpty(List<?> obj) {
-        return Boolean.FALSE.equals(isNullOrEmpty(obj));
-    }
-
-    public static boolean notNullOrEmpty(Set<?> obj) {
-        return Boolean.FALSE.equals(isNullOrEmpty(obj));
-    }
-
-    public static boolean notNullOrEmpty(Long value) {
-        return Boolean.FALSE.equals(isNullOrEmpty(value));
-    }
-
     public static void validateFromStartValidityDate(LocalDate startValidate) {
         InvalidDataException.isCondition(startValidate.isBefore(LocalDate.now()),
                 "Data informada não pode ser anterior a data atual");
@@ -76,7 +56,7 @@ public final class Util {
 
     public static void validateFromEndValidityDate(LocalDate startValidate, LocalDate endValidate) {
         InvalidDataException.isCondition(endValidate.isBefore(LocalDate.now()),
-                "Data informada não pode ser anterior a data atual");
+                "Data fim informada não pode ser anterior a data atual");
         InvalidDataException.isCondition(endValidate.isBefore(startValidate),
                 "Data fim não pode ser anterior a data início");
     }

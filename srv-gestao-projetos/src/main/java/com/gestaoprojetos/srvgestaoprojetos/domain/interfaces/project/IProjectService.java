@@ -13,5 +13,5 @@ public interface IProjectService<P extends IProjectForm> {
 
     IProjectEntity findByNameProject(String nameProject);
 
-    IProjectEntity findProjectByClient(Long idCliente);
+    List<IProjectEntity> findProjectByClient(Long idCliente);
 }

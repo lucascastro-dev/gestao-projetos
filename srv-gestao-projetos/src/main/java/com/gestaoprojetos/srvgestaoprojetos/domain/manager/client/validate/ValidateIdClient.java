@@ -4,7 +4,7 @@ import com.gestaoprojetos.srvgestaoprojetos.constants.Constants;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.client.ClientService;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.client.ClientService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.util.Util;
 import com.gestaoprojetos.srvgestaoprojetos.infra.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -34,15 +34,11 @@ public class ClientEntity implements IClientEntity {
     private String name;
     private String email;
     private String phone;
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<ProjectEntity> projects = new HashSet<>();
 
     public ClientEntity(IClientForm clientForm) {
         this.idClient = clientForm.getIdClient();
         this.name = clientForm.getName();
         this.email = clientForm.getEmail();
         this.phone = clientForm.getPhone();
-        this.projects = clientForm.getProjects().stream().map(
-                project -> ProjectEntity.builder().idProject(project).build()).collect(Collectors.toSet());
     }
 }

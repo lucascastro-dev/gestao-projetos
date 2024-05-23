@@ -7,7 +7,7 @@ import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientEnti
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IFindClienteManager;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.client.ClientService;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.client.ClientService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.util.Util;
 import com.gestaoprojetos.srvgestaoprojetos.infra.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,7 +7,7 @@ import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivity
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IFindActivityManager;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.activity.ActivityService;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.activity.ActivityService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.util.Util;
 import com.gestaoprojetos.srvgestaoprojetos.infra.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

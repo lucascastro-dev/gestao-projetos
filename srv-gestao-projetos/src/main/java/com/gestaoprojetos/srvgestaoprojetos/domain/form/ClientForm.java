@@ -20,5 +20,4 @@ public class ClientForm implements IClientForm {
     private String name;
     private String email;
     private String phone;
-    private Set<Long> projects;
 }

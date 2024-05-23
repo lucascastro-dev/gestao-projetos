@@ -5,7 +5,6 @@ import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientMana
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.client.task.TaskSaveClient;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.client.validate.ValidateClientData;
 import com.gestaoprojetos.srvgestaoprojetos.domain.manager.client.validate.ValidateIdClient;
-import com.gestaoprojetos.srvgestaoprojetos.domain.manager.client.validate.ValidateProjectClient;
 import com.gestaoprojetos.srvgestaoprojetos.infra.handler.AbstractHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ public class CreateOrUpdateClientManager extends AbstractHandler<IClientForm>
         setTasks(List.of(
                 ValidateIdClient.class,
                 ValidateClientData.class,
-                ValidateProjectClient.class,
                 TaskSaveClient.class
         ));
     }

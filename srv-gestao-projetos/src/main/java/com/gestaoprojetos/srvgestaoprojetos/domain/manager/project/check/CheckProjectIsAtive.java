@@ -5,8 +5,8 @@ import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectEn
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.project.ProjectService;
 import com.gestaoprojetos.srvgestaoprojetos.infra.exception.InvalidDataException;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,6 @@ public class CheckProjectIsAtive implements ITask<IProjectForm> {
     public void runTask(IProjectForm param) {
         IProjectEntity projectEntity = projectService.findProjectById(param.getIdProject());
 
-        InvalidDataException.isCondition(!projectEntity.getStatus(), Constants.PROJECT_IS_ATIVE);
+        InvalidDataException.isCondition(projectEntity.getStatus(), Constants.PROJECT_IS_ATIVE);
     }
 }

@@ -1,5 +1,7 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity;
 
+import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectEntity;
+
 import java.util.List;
 
 public interface IActivityService<P extends IActivityForm> {
@@ -11,4 +13,6 @@ public interface IActivityService<P extends IActivityForm> {
     List<IActivityEntity> findAllActivity();
 
     IActivityEntity findActivityById(Long idActivity);
+
+    IActivityEntity findByProjects(IProjectEntity project);
 }

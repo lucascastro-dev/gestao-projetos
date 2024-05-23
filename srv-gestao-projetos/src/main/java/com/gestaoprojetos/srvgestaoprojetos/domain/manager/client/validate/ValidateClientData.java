@@ -5,9 +5,9 @@ import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientEnti
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.client.IClientService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.client.ClientService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.util.Util;
 import com.gestaoprojetos.srvgestaoprojetos.infra.exception.DuplicateDataBaseException;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class ValidateClientData implements ITask<IClientForm> {
             IClientEntity clientEntity = clientService.findByNameClient(param.getName());
 
             DuplicateDataBaseException.isCondition(
-                    clientEntity != null && clientEntity.equals(param.getName()),
+                    clientEntity != null && clientEntity.getName().equals(param.getName()),
                     Constants.DUPLICATE_CLIENT
             );
         }

@@ -7,7 +7,7 @@ import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectDt
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectEntity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectService;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.project.ProjectService;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.project.ProjectService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.util.Util;
 import com.gestaoprojetos.srvgestaoprojetos.infra.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

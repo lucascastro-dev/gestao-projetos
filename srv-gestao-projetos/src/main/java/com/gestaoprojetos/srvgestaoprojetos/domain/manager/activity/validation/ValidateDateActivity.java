@@ -1,10 +1,7 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity.validation;
 
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
-import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.activity.ActivityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,13 +11,6 @@ import static com.gestaoprojetos.srvgestaoprojetos.domain.util.Util.validateFrom
 
 @Service
 public class ValidateDateActivity implements ITask<IActivityForm> {
-    private final IActivityService<IActivityForm> activityService;
-
-    @Autowired
-    public ValidateDateActivity(ActivityService activityService) {
-        this.activityService = activityService;
-    }
-
     @Override
     public void runTask(IActivityForm param) {
         validateDate(param.getStartDate(), param.getEndDate());

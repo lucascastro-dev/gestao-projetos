@@ -1,9 +1,9 @@
 package com.gestaoprojetos.srvgestaoprojetos.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityEntity;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,6 +15,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDate;
 
@@ -35,9 +37,9 @@ public class ActivityEntity implements IActivityEntity {
     private LocalDate startDate;
     private LocalDate endDate;
     private Boolean status;
-    @ManyToOne
     @JoinColumn(name = "idProject")
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
     private ProjectEntity projects;
 
     public ActivityEntity(IActivityForm activityForm) {

@@ -5,7 +5,7 @@ import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectEn
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.project.IProjectService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.project.ProjectService;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.project.ProjectService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.util.Util;
 import com.gestaoprojetos.srvgestaoprojetos.infra.exception.DuplicateDataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ValidateProjectData implements ITask<IProjectForm> {
             IProjectEntity projectEntity = projectService.findByNameProject(param.getName());
 
             DuplicateDataBaseException.isCondition(
-                    projectEntity != null && projectEntity.equals(param.getName()),
+                    projectEntity != null && projectEntity.getName().equals(param.getName()),
                     Constants.DUPLICATE_PROJECT);
         }
     }

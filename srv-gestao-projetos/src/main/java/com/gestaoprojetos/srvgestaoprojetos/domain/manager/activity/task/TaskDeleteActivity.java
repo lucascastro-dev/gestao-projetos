@@ -3,7 +3,7 @@ package com.gestaoprojetos.srvgestaoprojetos.domain.manager.activity.task;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityForm;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.activity.IActivityService;
 import com.gestaoprojetos.srvgestaoprojetos.domain.interfaces.validation.ITask;
-import com.gestaoprojetos.srvgestaoprojetos.domain.service.activity.ActivityService;
+import com.gestaoprojetos.srvgestaoprojetos.infra.service.activity.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
