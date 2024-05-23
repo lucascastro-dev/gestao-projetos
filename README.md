@@ -11,13 +11,13 @@ Este projeto foi desenvolvido como parte de um desafio técnico para o Grupo AG 
 - **JUnit e Mockito**: Ferramentas de teste para garantir a qualidade do código.
 - **Swagger**: Ferramenta para documentação da API REST.
 
-## Características de Implementação
-- Arquitetura modular e extensível seguindo os princípios SOLID.
-- Utilização do padrão Chain of Responsibility para garantir a escalabilidade do projeto no backend.
-
 ### Frontend
 - **Vue.js 3**: Framework JavaScript para construção de interfaces de usuário reativas.
 - **Vuetify**: Biblioteca de componentes Vue baseada no Material Design para um design consistente e responsivo.
+
+## Características de Implementação
+- Arquitetura modular e extensível seguindo os princípios SOLID.
+- Utilização do padrão Chain of Responsibility para garantir a escalabilidade do projeto no backend.
 
 ## Funcionalidades Principais
 - Cadastro de Clientes, Projetos e Atividades.
@@ -40,5 +40,7 @@ Este projeto foi desenvolvido como parte de um desafio técnico para o Grupo AG 
 
 ## Testes
 - Os testes unitários cobrem a camada de domínio no backend.
+
+## Diagrama de classes
 
 --- 
