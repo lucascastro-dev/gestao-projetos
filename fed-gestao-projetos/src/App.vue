@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <Main />
+      <Main/>
     </v-main>
   </v-app>
 </template>

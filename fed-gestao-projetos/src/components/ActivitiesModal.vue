@@ -1,11 +1,14 @@
 <template>
-  <v-dialog persistent max-width="600px">
+  <v-dialog :modelValue="modalActivityOpen" persistent max-width="600px">
     <v-card>
       <v-card-title>Lista de Atividades</v-card-title>
       <v-card-text>
         <v-list>
           <v-list-item v-for="(atividade, index) in atividades" :key="index">
-            <v-list-item-title>{{ atividade }}</v-list-item-title>
+            <v-list-item-title>
+              <div>{{ atividade.name }}</div>
+              <div>{{ atividade.description }}</div>
+            </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-card-text>
@@ -19,8 +22,14 @@
 <script>
 export default {
   props: {
-    modalActivityOpen: Boolean,
-    atividades: Array
+    modalActivityOpen: {
+      type: Boolean,
+      required: true
+    },
+    atividades: {
+      type: Array,
+      required: true
+    }
   },
   methods: {
     closeModal() {

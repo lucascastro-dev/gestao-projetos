@@ -10,13 +10,12 @@
         <v-card-text>
           <form @submit.prevent="submit">
             <v-select
-  v-model="selectedClientId"
-  :items="clients.map(client => client.text)"
-  :error-messages="clientIdErrors"
-  label="Cliente"
-  @change="loadClientDetails(selectedClientId)"
-></v-select>
-
+              v-model="selectedClientId"
+              :items="clients.map(client => client.text)"
+              :error-messages="clientIdErrors"
+              label="Cliente"
+              @change="loadClientDetails(selectedClientId)"
+            ></v-select>
 
             <v-text-field
               v-model="nameValue"
@@ -62,10 +61,8 @@ import * as yup from 'yup'
 const modalOpenEditClient = ref(false)
 const clients = ref([])
 const selectedClientId = ref(null)
-const dropDownList = [];
 
 const validationSchema = yup.object({
-  selectedClientId: yup.string().required('Cliente obrigatório'),
   name: yup.string().required('Nome obrigatório'),
   email: yup.string().email('Email inválido').required('Email obrigatório'),
   phone: yup.string().required('Telefone obrigatório')
@@ -97,7 +94,7 @@ const submit = handleSubmit(async values => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        idClient: clientId.value,
+        idClient: selectedClientId.value.split(' - ')[0],
         name: values.name,
         email: values.email,
         phone: values.phone
@@ -119,12 +116,10 @@ const submit = handleSubmit(async values => {
 
 const loadClientDetails = (clientId) => {
   const selectedClient = clients.value.find(client => client.value === clientId)
-  console.log(clients)
   if (selectedClient) {
-    nameValue.value = selectedClient.name
+    nameValue.value = `${selectedClient.value} - ${selectedClient.name}`
     emailValue.value = selectedClient.email
     phoneValue.value = selectedClient.phone
-    selectedClientId.value = clientId
   }
 }
 
@@ -136,8 +131,8 @@ onMounted(async () => {
     }
     const data = await response.json()
     clients.value = data.map(client => ({
-      text: client.name,
-      value: client.id,
+      text: `${client.idClient} - ${client.name}`,
+      value: client.idClient,
       name: client.name,
       email: client.email,
       phone: client.phone

@@ -1,49 +1,39 @@
 <template>
-  <v-list width="600px">
-    <v-list-item>
-      <v-row>
-        <v-col cols="4">
-          <span>Cliente</span>
-        </v-col>
-        <v-col cols="4">
-          <span>Projeto</span>
-        </v-col>
-        <v-col cols="3">
-          <span>Atividade</span>
-        </v-col>
-      </v-row>
-    </v-list-item>
+  <div>
+    <v-list width="600px">
+      <v-list-item>
+        <v-row>
+          <v-col cols="4">
+            <span>Cliente</span>
+          </v-col>
+          <v-col cols="4">
+            <span>Projeto</span>
+          </v-col>
+          <v-col cols="4">
+            <span>Atividade</span>
+          </v-col>
+        </v-row>
+      </v-list-item>
 
-    <v-list-item v-for="(item, index) in items" :key="index">
-      <v-row>
-        <v-col cols="4">
-          <span>{{ item.cliente }}</span>
-        </v-col>
-        <v-col cols="4">
-          <span>{{ item.projeto }}</span>
-        </v-col>
-        <v-col cols="3">
-          <v-icon @click="openModal">mdi-magnify</v-icon>
-        </v-col>
-      </v-row>
-    </v-list-item>
-  </v-list>
+      <v-list-item-group>
+        <v-list-item v-for="(project, projectIndex) in filteredProjects" :key="projectIndex">
+          <v-row>
+            <v-col cols="4">
+              <span>{{ project.client.name }}</span>
+            </v-col>
+            <v-col cols="4">
+              <span>{{ project.name }}</span>
+            </v-col>
+            <v-col cols="4">
+              <v-icon @click="openModal(projectIndex)">mdi-magnify</v-icon>
+            </v-col>
+          </v-row>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
 
-  <v-dialog v-model="modalActivityOpen" persistent max-width="600px">
-    <v-card>
-      <v-card-title>Lista de Atividades</v-card-title>
-      <v-card-text>
-        <v-list>
-          <v-list-item v-for="(atividade, index) in atividades" :key="index">
-            <v-list-item-title>{{ atividade }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-      <v-card-actions>
-        <v-btn color="primary" @click="modalActivityOpen = false">Fechar</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+    <ActivitiesModal :modalActivityOpen="modalActivityOpen" :atividades="filteredProjectActivities" @close="modalActivityOpen = false" />
+  </div>
 </template>
 
 <script>
@@ -55,17 +45,68 @@ export default {
   },
   data() {
     return {
-      items: [
-        { cliente: 'Cliente 1', projeto: 'Projeto 1', },
-        { cliente: 'Cliente 2', projeto: 'Projeto 2', }
-      ],
+      projects: [],
       modalActivityOpen: false,
-      atividades: ['Atividade 1', 'Atividade 2', 'Atividade 3']
-    }
+      modalProjectIndex: null
+    };
+  },
+  mounted() {
+    this.fetchProjects();
   },
   methods: {
-    openModal() {
+    async fetchProjects() {
+      try {
+        const projectsResponse = await fetch('http://localhost:8081/srv-gestao-projetos/project');
+        if (!projectsResponse.ok) {
+          throw new Error('Erro ao obter lista de projetos');
+        }
+
+        const projectsData = await projectsResponse.json();
+
+        this.projects = projectsData.map(project => ({
+          ...project,
+          activities: []
+        }));
+
+        await this.fetchActivities();
+      } catch (error) {
+        console.error('Error fetching projects:', error.message);
+      }
+    },
+    async fetchActivities() {
+      try {
+        const activitiesResponse = await fetch('http://localhost:8081/srv-gestao-projetos/activity');
+        if (!activitiesResponse.ok) {
+          throw new Error('Erro ao obter lista de atividades');
+        }
+
+        const activitiesData = await activitiesResponse.json();
+
+        activitiesData.forEach(activity => {
+          const projectIndex = this.projects.findIndex(project => project.idProject === activity.project.idProject);
+          if (projectIndex !== -1) {
+            this.projects[projectIndex].activities.push(activity);
+          }
+        });
+
+      } catch (error) {
+        console.error('Error fetching activities:', error.message);
+      }
+    },
+    openModal(projectIndex) {
+      this.modalProjectIndex = projectIndex;
       this.modalActivityOpen = true;
+    }
+  },
+  computed: {
+    filteredProjects() {
+      return this.projects.filter(project => project.status);
+    },
+    filteredProjectActivities() {
+      if (this.modalProjectIndex !== null) {
+        return this.projects[this.modalProjectIndex].activities.filter(activity => activity.status);
+      }
+      return [];
     }
   }
 };

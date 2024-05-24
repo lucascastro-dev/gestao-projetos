@@ -3,11 +3,19 @@
     <v-btn @click="openModalCreateActivity" color="primary">
       Criar Atividade
     </v-btn>
+
     <v-dialog v-model="modalOpenCreateActivity" max-width="600">
       <v-card>
         <v-card-title>Cadastro de Atividade</v-card-title>
         <v-card-text>
           <form @submit.prevent="submit">
+            <v-select
+              v-model="selectedProjectId"
+              :items="projects.map(project => `${project.value} - ${project.text}`)"
+              label="Projeto"
+              :error-messages="projectErrors"
+            ></v-select>
+
             <v-text-field
               v-model="nameValue"
               :error-messages="nameErrors"
@@ -33,15 +41,8 @@
               type="date"
             ></v-text-field>
 
-            <v-select
-              v-model="projectValue"
-              :error-messages="projectErrors"
-              :items="items"
-              label="Projeto"
-            ></v-select>
-
             <v-checkbox
-              v-model="checkboxValue"
+              v-model="statusValue"
               label="Ativar atividade"
               type="checkbox"
               value="1"
@@ -66,36 +67,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 const modalOpenCreateActivity = ref(false)
+const projects = ref([])
+const selectedProjectId = ref(null)
 
 const validationSchema = yup.object({
+  selectedProjectId: yup.string().required('Seleção de projeto obrigatória'),
   name: yup.string().required('Nome obrigatório'),
   startDate: yup.date().required('Data de início obrigatória'),
   endDate: yup.date().required('Data de fim obrigatória'),
-  project: yup.string().required('Seleção de projeto obrigatória'),
 })
 
 const { handleSubmit, resetForm } = useForm({
   validationSchema,
 })
 
-const { value: nameValue, errorMessage: nameErrors } = useField('name')
-const { value: descriptionValue } = useField('description')
-const { value: startDateValue, errorMessage: startDateErrors } = useField('startDate')
-const { value: endDateValue, errorMessage: endDateErrors } = useField('endDate')
-const { value: projectValue, errorMessage: projectErrors } = useField('project')
-const { value: checkboxValue } = useField('checkbox')
 
-const items = ref([
-  'Projeto 1',
-  'Projeto 2',
-  'Projeto 3',
-  'Projeto 4',
-])
+const nameValue = ref('')
+const descriptionValue = ref('')
+const startDateValue = ref('')
+const endDateValue = ref('')
+const statusValue = ref(false)
+const { value: projectValue, errorMessage: projectErrors } = useField('selectedProjectId')
 
 const openModalCreateActivity = () => {
   modalOpenCreateActivity.value = true
@@ -106,7 +103,51 @@ const closeModal = () => {
   resetForm()
 }
 
-const submit = handleSubmit(values => {
-  alert(JSON.stringify(values, null, 2))
+const submit = async (event) => {
+  event.preventDefault();
+  try {
+    const response = await fetch(`http://localhost:8081/srv-gestao-projetos/activity`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: nameValue.value,
+        description: descriptionValue.value,
+        startDate: startDateValue.value,
+        endDate: endDateValue.value,
+        idProjects: selectedProjectId.value.split(' - ')[0],
+        status: statusValue.value ? true : false,
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar atividade')
+    }
+
+    resetForm()
+    closeModal()
+    alert('Atividade criada com sucesso!')
+  } catch (error) {
+    console.error('Erro ao criar atividade:', error.message)
+    alert('Erro ao criar atividade. Por favor, tente novamente.')
+  }
+}
+
+onMounted(async () => {
+  try {
+    const projectsResponse = await fetch('http://localhost:8081/srv-gestao-projetos/project')
+    if (!projectsResponse.ok) {
+      throw new Error('Erro ao obter lista de projetos')
+    }
+    const projectsData = await projectsResponse.json()
+    projects.value = projectsData.map(project => ({
+      text: project.name,
+      value: project.idProject,
+    }))
+  } catch (error) {
+    console.error('Erro ao obter lista de projetos:', error.message)
+    alert('Erro ao obter lista de projetos. Por favor, tente novamente.')
+  }
 })
 </script>

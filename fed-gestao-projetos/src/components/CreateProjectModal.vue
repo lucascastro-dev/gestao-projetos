@@ -3,48 +3,43 @@
     <v-btn @click="openModalCreateProject" color="primary">
       Criar Projeto
     </v-btn>
+
     <v-dialog v-model="modalOpenCreateProject" max-width="600">
       <v-card>
         <v-card-title>Criar projeto</v-card-title>
         <v-card-text>
           <form @submit.prevent="submit">
-                        <v-text-field
+            <v-text-field
               v-model="nameValue"
-              :error-messages="nameErrors"
               label="Nome do projeto"
             ></v-text-field>
 
             <v-text-field
               v-model="descriptionValue"
-              :error-messages="descriptionErrors"
               label="Descrição"
             ></v-text-field>
 
             <v-text-field
               v-model="startDateValue"
-              :error-messages="startDateErrors"
               label="Data início"
               type="date"
             ></v-text-field>
 
             <v-text-field
               v-model="endDateValue"
-              :error-messages="endDateErrors"
               label="Data fim"
               type="date"
             ></v-text-field>
 
             <v-select
-              v-model="clientValue"
-              :error-messages="clientErrors"
-              :items="items"
+              v-model="selectedClientId"
+              :items="clients.map(client => `${client.value} - ${client.text}`)"
               label="Cliente"
             ></v-select>
 
             <v-checkbox
-              v-model="checkboxValue"
+              v-model="statusValue"
               label="Ativar projeto"
-              type="checkbox"
               value="1"
             ></v-checkbox>
 
@@ -67,38 +62,31 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useField, useForm } from 'vee-validate'
+import { ref, onMounted } from 'vue'
+import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 const modalOpenCreateProject = ref(false)
+const clients = ref([])
+const selectedClientId = ref(null)
 
 const validationSchema = yup.object({
-  project: yup.string().required('Seleção de projeto obrigatória'),
   name: yup.string().required('Nome obrigatório'),
   description: yup.string(),
   startDate: yup.date().required('Data de início obrigatória'),
   endDate: yup.date().required('Data de fim obrigatória'),
-  client: yup.string().required('Seleção de cliente obrigatória'),
+  selectedClientId: yup.string().required('Seleção de cliente obrigatória'),
 })
 
 const { handleSubmit, resetForm } = useForm({
   validationSchema,
 })
 
-const { value: nameValue, errorMessage: nameErrors } = useField('name')
-const { value: descriptionValue, errorMessage: descriptionErrors } = useField('description')
-const { value: startDateValue, errorMessage: startDateErrors } = useField('startDate')
-const { value: endDateValue, errorMessage: endDateErrors } = useField('endDate')
-const { value: clientValue, errorMessage: clientErrors } = useField('client')
-const { value: checkboxValue } = useField('checkbox')
-
-const items = ref([
-  'Cliente 1',
-  'Cliente 2',
-  'Cliente 3',
-  'Cliente 4',
-])
+const nameValue = ref('')
+const descriptionValue = ref('')
+const startDateValue = ref('')
+const endDateValue = ref('')
+const statusValue = ref(false)
 
 const openModalCreateProject = () => {
   modalOpenCreateProject.value = true
@@ -109,7 +97,51 @@ const closeModal = () => {
   resetForm()
 }
 
-const submit = handleSubmit(values => {
-  alert(JSON.stringify(values, null, 2))
+const submit = async (event) => {
+  event.preventDefault();
+  try {
+    const response = await fetch(`http://localhost:8081/srv-gestao-projetos/project`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: nameValue.value,
+        description: descriptionValue.value,
+        startDate: startDateValue.value,
+        endDate: endDateValue.value,
+        idClient: selectedClientId.value.split(' - ')[0],
+        status: statusValue.value ? true : false,
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar projeto')
+    }
+
+    resetForm()
+
+    alert('Projeto criado com sucesso!')
+  } catch (error) {
+    console.error('Erro ao criar projeto:', error.message)
+    alert('Erro ao criar projeto. Por favor, tente novamente.')
+  }
+}
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost:8081/srv-gestao-projetos/client')
+    if (!response.ok) {
+      throw new Error('Erro ao obter lista de clientes')
+    }
+    const data = await response.json()
+    clients.value = data.map(client => ({
+      text: client.name,
+      value: client.idClient,
+    }))
+  } catch (error) {
+    console.error('Erro ao obter lista de clientes:', error.message)
+    alert('Erro ao obter lista de clientes. Por favor, tente novamente.')
+  }
 })
 </script>

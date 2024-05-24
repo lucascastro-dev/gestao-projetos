@@ -36,7 +36,7 @@ Este projeto foi desenvolvido como parte de um desafio técnico para o Grupo AG 
    - Clone o repositório.
    - Navegue até o diretório do projeto Vue.js.
    - Instale as dependências utilizando `npm install`.
-   - Inicie o servidor de desenvolvimento com `npm run serve`.
+   - Inicie o servidor de desenvolvimento com `npm run dev`.
 
 ## Testes
 - Os testes unitários cobrem a camada de domínio no backend.
