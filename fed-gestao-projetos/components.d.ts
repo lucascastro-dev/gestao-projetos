@@ -17,6 +17,7 @@ declare module 'vue' {
     EditProjectModal: typeof import('./src/components/EditProjectModal.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     ListClient: typeof import('./src/components/ListClient.vue')['default']
+    ListClients: typeof import('./src/components/ListClients.vue')['default']
     ListDashboard: typeof import('./src/components/ListDashboard.vue')['default']
     Main: typeof import('./src/components/Main.vue')['default']
     Menu: typeof import('./src/components/Menu.vue')['default']

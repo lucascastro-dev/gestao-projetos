@@ -1,88 +1,46 @@
 <template>
-  <v-app-bar :elevation="2">
-    <v-menu>
-      <template v-slot:activator="{ props }">
-        <v-btn color="primary" v-bind="props">
-          Cliente
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item v-for="(item, index) in client" :key="index" :value="index" @click="item.handle(modalOpen)">
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-
-    <v-btn color="primary">
-      Projeto
-
-      <v-menu activator="parent">
-        <v-list>
-          <v-list-item v-for="(item, index) in project" :key="index" :value="index">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-btn>
-
-    <v-btn id="menu-activator" color="primary">
-      Atividade
-    </v-btn>
-
-    <v-menu activator="#menu-activator">
-      <v-list>
-        <v-list-item v-for="(item, index) in activity" :key="index" :value="index">
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-
-    <!-- Renderizar o modal -->
-    <CreateClienteModal :modalOpen="modalOpen" />
-  </v-app-bar>
+  <v-navigation-drawer app permanent>
+    <v-list dense>
+      <v-list-item-title style="align-items: center; display: flex; margin-left: 20px;">Gestão de
+        Clientes</v-list-item-title>
+      <v-list-item>
+        <CreateClienteModal :modalOpenCreateClient="modalOpen" />
+        <EditClientModal :modalOpenEditClient="modalOpen" />
+      </v-list-item>
+      <v-list-item-title style="align-items: center; display: flex; margin-left: 20px;">Gestão de
+        Projetos</v-list-item-title>
+      <v-list-item>
+        <CreateProjectModal :modalOpenCreateProject="modalOpen" />
+        <EditProjectModal :modalOpenEditProject="modalOpen" />
+      </v-list-item>
+      <v-list-item-title style="align-items: center; display: flex; margin-left: 20px;">Gestão de
+        Atividades</v-list-item-title>
+      <v-list-item>
+        <CreateActivityModal :modalOpenCreateActivity="modalOpen" />
+        <EditActivityModal :modalOpenEditActivity="modalOpen"/>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script>
-import CreateClienteModal from './CreateClientModal'
-
-const handleCreateClient = (modalOpen) => {
-  console.log("Cadastrar Cliente")
-  modalOpen.value = true;
-}
-const handleEditClient = () => {
-  console.log("Editar Cliente")
-}
-const handleCreateProject = () => {
-  console.log("Criar Projeto")
-}
-const handleEditProject = () => {
-  console.log("Editar Projeto")
-}
-const handleCreateActivity = () => {
-  console.log("Criar Atividade")
-}
-const handleEditActivity = () => {
-  console.log("Editar Atividade")
-}
+import CreateClienteModal from './CreateClientModal.vue'
+import CreateProjectModal from './CreateProjectModal.vue';
+import EditClientModal from './EditClientModal.vue';
+import EditProjectModal from './EditProjectModal.vue';
+import CreateActivityModal from './CreateActivityModal.vue'
+import EditActivityModal from './EditActivityModal.vue';
 
 export default {
   components: {
-    CreateClienteModal
+    CreateClienteModal,
+    EditClientModal,
+    CreateProjectModal,
+    EditProjectModal,
+    CreateActivityModal,
+    EditActivityModal
   },
   data: () => ({
-    modalOpen: false,
-    client: [
-      { title: 'Cadastrar Cliente', handle: handleCreateClient},
-      { title: 'Editar Cliente', handle: handleEditClient }
-    ],
-    project: [
-      { title: 'Criar Projeto', handle: handleCreateProject },
-      { title: 'Editar Projeto', handle: handleEditProject }
-    ],
-    activity: [
-      { title: 'Criar Atividade', handle: handleCreateActivity },
-      { title: 'Editar Atividade', handleEditActivity }
-    ],
   }),
 }
 </script>

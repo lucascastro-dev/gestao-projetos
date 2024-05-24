@@ -29,7 +29,7 @@
     </v-list-item>
   </v-list>
 
-  <v-dialog v-model="modalOpen" persistent max-width="600px">
+  <v-dialog v-model="modalActivityOpen" persistent max-width="600px">
     <v-card>
       <v-card-title>Lista de Atividades</v-card-title>
       <v-card-text>
@@ -40,7 +40,7 @@
         </v-list>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" @click="modalOpen = false">Fechar</v-btn>
+        <v-btn color="primary" @click="modalActivityOpen = false">Fechar</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -56,15 +56,16 @@ export default {
   data() {
     return {
       items: [
-        { cliente: 'Cliente 1', projeto: 'Projeto 1' }
+        { cliente: 'Cliente 1', projeto: 'Projeto 1', },
+        { cliente: 'Cliente 2', projeto: 'Projeto 2', }
       ],
-      modalOpen: false,
+      modalActivityOpen: false,
       atividades: ['Atividade 1', 'Atividade 2', 'Atividade 3']
     }
   },
   methods: {
     openModal() {
-      this.modalOpen = true;
+      this.modalActivityOpen = true;
     }
   }
 };

@@ -19,7 +19,7 @@
 <script>
 export default {
   props: {
-    modalOpen: Boolean,
+    modalActivityOpen: Boolean,
     atividades: Array
   },
   methods: {

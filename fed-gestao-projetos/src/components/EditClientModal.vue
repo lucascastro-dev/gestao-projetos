@@ -1,77 +1,150 @@
 <template>
-  <form @submit.prevent="submit">
-    <v-select
-      v-model="select.value.value"
-      :error-messages="select.errorMessage.value"
-      :items="items"
-      label="Cliente"
-    ></v-select>
-
-    <v-text-field
-      v-model="name.value.value"
-      :error-messages="name.errorMessage.value"
-      label="Nome do cliente"
-    ></v-text-field>
-
-    <v-text-field
-      v-model="email.value.value"
-      :error-messages="email.errorMessage.value"
-      label="E-mail"
-    ></v-text-field>
-
-    <v-text-field
-      v-model="phone.value.value"
-      :error-messages="phone.errorMessage.value"
-      label="Telefone"
-    ></v-text-field>
-
-    <v-btn
-      class="me-4"
-      type="submit"
-    >
-      Cadastrar cliente
+  <div>
+    <v-btn @click="openModalEditClient" color="primary">
+      Editar Cliente
     </v-btn>
 
-    <v-btn @click="handleReset">
-      Limpar
-    </v-btn>
-  </form>
+    <v-dialog v-model="modalOpenEditClient" max-width="600">
+      <v-card>
+        <v-card-title>Editar cliente</v-card-title>
+        <v-card-text>
+          <form @submit.prevent="submit">
+            <v-select
+  v-model="selectedClientId"
+  :items="clients.map(client => client.text)"
+  :error-messages="clientIdErrors"
+  label="Cliente"
+  @change="loadClientDetails(selectedClientId)"
+></v-select>
+
+
+            <v-text-field
+              v-model="nameValue"
+              :error-messages="nameErrors"
+              label="Nome do cliente"
+            ></v-text-field>
+
+            <v-text-field
+              v-model="emailValue"
+              :error-messages="emailErrors"
+              label="E-mail"
+            ></v-text-field>
+
+            <v-text-field
+              v-model="phoneValue"
+              :error-messages="phoneErrors"
+              label="Telefone"
+            ></v-text-field>
+
+            <v-btn type="submit" color="primary">
+              Editar cliente
+            </v-btn>
+            <v-btn type="button" @click="resetForm" color="secondary">
+              Limpar
+            </v-btn>
+          </form>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="closeModal" color="secondary">
+            Cancelar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import { useField, useForm } from 'vee-validate'
+import { ref, onMounted } from 'vue'
+import { useField, useForm } from 'vee-validate'
+import * as yup from 'yup'
 
-  const { handleSubmit, handleReset } = useForm({
-    validationSchema: {
-      name (value) {
-        if (value?.length) return true
+const modalOpenEditClient = ref(false)
+const clients = ref([])
+const selectedClientId = ref(null)
+const dropDownList = [];
 
-        return 'Nome obrigatório'
+const validationSchema = yup.object({
+  selectedClientId: yup.string().required('Cliente obrigatório'),
+  name: yup.string().required('Nome obrigatório'),
+  email: yup.string().email('Email inválido').required('Email obrigatório'),
+  phone: yup.string().required('Telefone obrigatório')
+})
+
+const { handleSubmit, resetForm } = useForm({
+  validationSchema,
+})
+
+const { value: clientId, errorMessage: clientIdErrors } = useField('selectedClientId')
+const { value: nameValue, errorMessage: nameErrors } = useField('name')
+const { value: emailValue, errorMessage: emailErrors } = useField('email')
+const { value: phoneValue, errorMessage: phoneErrors } = useField('phone')
+
+const openModalEditClient = () => {
+  modalOpenEditClient.value = true
+}
+
+const closeModal = () => {
+  modalOpenEditClient.value = false
+  resetForm()
+}
+
+const submit = handleSubmit(async values => {
+  try {
+    const response = await fetch(`http://localhost:8081/srv-gestao-projetos/client`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
       },
-      email (value) {
-        if (value?.length) return true
+      body: JSON.stringify({
+        idClient: clientId.value,
+        name: values.name,
+        email: values.email,
+        phone: values.phone
+      })
+    })
 
-        return 'Email obrigatório'
-      },
-      phone (value) {
-        if (value?.length) return true
+    if (!response.ok) {
+      throw new Error('Erro ao editar cliente')
+    }
 
-        return 'Telefone obrigatório'
-      },
-      select (value) {
-        if (value) return true
+    resetForm()
 
-        return 'Obrigatório selecionar cliente para editar'
-      },
-    },
-  })
-  const name = useField('name')
-  const email = useField('email')
-  const phone = useField('phone')
-  const select = useField('select')
+    alert('Cliente editado com sucesso!')
+  } catch (error) {
+    console.error('Erro ao editar cliente:', error.message)
+    alert('Erro ao editar cliente. Por favor, tente novamente.')
+  }
+})
 
-  const submit = handleSubmit(values => {
-    alert(JSON.stringify(values, null, 2))
-  })
+const loadClientDetails = (clientId) => {
+  const selectedClient = clients.value.find(client => client.value === clientId)
+  console.log(clients)
+  if (selectedClient) {
+    nameValue.value = selectedClient.name
+    emailValue.value = selectedClient.email
+    phoneValue.value = selectedClient.phone
+    selectedClientId.value = clientId
+  }
+}
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost:8081/srv-gestao-projetos/client')
+    if (!response.ok) {
+      throw new Error('Erro ao obter lista de clientes')
+    }
+    const data = await response.json()
+    clients.value = data.map(client => ({
+      text: client.name,
+      value: client.id,
+      name: client.name,
+      email: client.email,
+      phone: client.phone
+    }))
+  } catch (error) {
+    console.error('Erro ao obter lista de clientes:', error.message)
+    alert('Erro ao obter lista de clientes. Por favor, tente novamente.')
+  }
+})
 </script>
