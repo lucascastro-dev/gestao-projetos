@@ -43,4 +43,6 @@ Este projeto foi desenvolvido como parte de um desafio técnico para o Grupo AG 
 
 ## Diagrama de classes
 
+![Diagrama Desafio (1)](https://github.com/lucascastro-dev/gestao-projetos-agcapital/assets/68044025/0cd9a392-84ac-43d0-bdbd-8992498b5fd1)
+
 --- 
