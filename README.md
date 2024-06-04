@@ -1,6 +1,4 @@
-# Desafio Técnico: Plataforma de Gestão de Projetos
-
-Este projeto foi desenvolvido como parte de um desafio técnico para o Grupo AG Capital. A finalidade do projeto é criar uma nova plataforma de gestão de projetos, substituindo o sistema legado desktop por uma aplicação web que atenda às necessidades da empresa, especialmente durante períodos como a pandemia de COVID-19, onde o acesso remoto é essencial.
+# Plataforma de Gestão de Projetos
 
 ## Tecnologias Utilizadas
 
