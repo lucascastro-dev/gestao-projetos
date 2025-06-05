@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/projeto")
+@RequestMapping("/projetos")
 @Tag(name = "Projetos", description = "Gerenciamentos de projetos")
 public class ProjetoController {
 

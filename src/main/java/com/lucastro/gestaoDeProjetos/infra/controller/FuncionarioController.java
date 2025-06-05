@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/funcionario")
+@RequestMapping("/funcionarios")
 @Tag(name = "Funcionarios", description = "Gerenciamentos de funcionarios")
 public class FuncionarioController {
 
