@@ -44,7 +44,7 @@ public class FuncionarioService implements IFuncionarioService {
 
     private void validarCpfDuplicado(String cpf) {
         if (funcionarioRepository.existsByCpf(cpf)) {
-            throw new IllegalArgumentException("CPF já cadastrado.");
+            throw new IllegalArgumentException("CPF já cadastrado");
         }
     }
 }
